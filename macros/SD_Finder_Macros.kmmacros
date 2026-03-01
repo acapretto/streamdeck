@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>AddToMacroPalette</key>
+		<false/>
+		<key>AddToStatusMenu</key>
+		<false/>
+		<key>IsActive</key>
+		<true/>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "System Events"
+    keystroke "c" using command down
+end tell
+delay 0.3
+tell application "Keyboard Maestro Engine"
+    setvariable "SDClip1" to (the clipboard as text)
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Copy to Clip 1</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>18</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6400</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>76DA22EF-CFB3-45BA-8490-ADCFFBD2A784</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "System Events"
+    keystroke "c" using command down
+end tell
+delay 0.3
+tell application "Keyboard Maestro Engine"
+    setvariable "SDClip2" to (the clipboard as text)
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Copy to Clip 2</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>19</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6400</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>CE0927C3-17EE-438A-BFFF-17292F9D6154</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "System Events"
+    keystroke "c" using command down
+end tell
+delay 0.3
+tell application "Keyboard Maestro Engine"
+    setvariable "SDClip3" to (the clipboard as text)
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Copy to Clip 3</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>20</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6400</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>BCA7F45F-91E4-40BA-96C9-BB04FC3C9D71</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "Keyboard Maestro Engine"
+    set theClip to getvariable "SDClip1"
+end tell
+if theClip is not "" then
+    set the clipboard to theClip
+    tell application "System Events"
+        keystroke "v" using command down
+    end tell
+end if</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Paste from Clip 1</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>18</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>6084CEE3-532E-4982-A7A9-531B1B304940</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "Keyboard Maestro Engine"
+    set theClip to getvariable "SDClip2"
+end tell
+if theClip is not "" then
+    set the clipboard to theClip
+    tell application "System Events"
+        keystroke "v" using command down
+    end tell
+end if</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Paste from Clip 2</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>19</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>2E1CD463-C590-4944-A6EB-AC00DEED88A1</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "Keyboard Maestro Engine"
+    set theClip to getvariable "SDClip3"
+end tell
+if theClip is not "" then
+    set the clipboard to theClip
+    tell application "System Events"
+        keystroke "v" using command down
+    end tell
+end if</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Paste from Clip 3</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>20</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>C1090990-D376-4237-99D1-F822A7222FBE</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>set theText to "You are an expert [ROLE]." &amp; return &amp; "Your goal is to [TASK]." &amp; return &amp; "Audience: [WHO THIS IS FOR]" &amp; return &amp; "Format: [BULLET POINTS / PROSE / TABLE / etc.]" &amp; return &amp; "Length: [BRIEF / STANDARD / DETAILED]" &amp; return &amp; "Constraints:" &amp; return &amp; "- [CONSTRAINT]" &amp; return &amp; "- Do not [THING TO AVOID]" &amp; return &amp; "- Ask clarifying questions if anything is unclear" &amp; return &amp; "" &amp; return &amp; "[PASTE CONTENT HERE]"
+set the clipboard to theText
+tell application "System Events"
+    keystroke "v" using command down
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Prompt Expert</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>35</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>17F7070E-EC67-4B97-B522-9089BA3AE1A7</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>set theText to "Think through this step by step before giving your final answer." &amp; return &amp; "" &amp; return &amp; "Context: [BACKGROUND]" &amp; return &amp; "Task: [WHAT YOU NEED]" &amp; return &amp; "Format: Show your reasoning briefly, then give a clear final answer." &amp; return &amp; "Constraints:" &amp; return &amp; "- Do not make assumptions — state them explicitly if you must make any" &amp; return &amp; "- Do not add unsolicited content beyond what I asked for" &amp; return &amp; "" &amp; return &amp; "[PASTE CONTENT OR QUESTION HERE]"
+set the clipboard to theText
+tell application "System Events"
+    keystroke "v" using command down
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Prompt Reasoning</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>15</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>3F9717B7-9617-4448-8844-16BE91C15E9E</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "Finder" to activate
+delay 0.2
+tell application "System Events"
+    tell process "Finder"
+        tell menu bar 1
+            tell menu bar item "File"
+                tell menu 1
+                    tell menu item "Share"
+                        tell menu 1
+                            click menu item "AirDrop…"
+                        end tell
+                    end tell
+                end tell
+            end tell
+        end tell
+    end tell
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - AirDrop Selected</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>0</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>36412066-2D59-4DAA-90E2-F1F5FD0A41F7</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>tell application "Finder"
+    set finderWindow to window 1
+    set finderPath to POSIX path of (target of finderWindow as alias)
+end tell
+tell application "Terminal"
+    activate
+    do script "cd " &amp; quoted form of finderPath
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Open Terminal Here</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>17</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>A6769A47-4D95-4E1D-8830-878C91BB6703</string>
+			</dict>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>ActionUID</key>
+						<integer>1</integer>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>ExecuteAppleScript</string>
+						<key>Text</key>
+						<string>set theText to the clipboard as text
+set the clipboard to theText
+tell application "System Events"
+    keystroke "v" using command down
+end tell</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+				</array>
+				<key>Activate</key>
+				<string>Normal</string>
+				<key>IsActive</key>
+				<true/>
+				<key>Name</key>
+				<string>SD - Paste Plain Text</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>9</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>6912</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>64B70629-5BE7-4B61-856E-7C2FE3E00F91</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>SD Finder</string>
+		<key>UID</key>
+		<string>8E5B26C6-9773-4817-A0E3-BE415AD5446D</string>
+	</dict>
+</array>
+</plist>
