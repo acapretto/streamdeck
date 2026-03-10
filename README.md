@@ -144,31 +144,133 @@ The `sceneitemid` is OBS's internal ID for the source within a scene. Find it in
 
 ### Multi-action switch (toggle)
 
-Press once to show, press again to hide. Uses a different UUID than regular multi-actions:
+Press once to show, press again to hide:
 
 ```python
-import uuid
+from streamdeck_installer import make_multi_action_switch, make_obs_source_visibility
 
 show_actions = [make_obs_source_visibility("Scene", "Source", 6, show=True)]
 hide_actions = [make_obs_source_visibility("Scene", "Source", 6, show=False)]
 
-toggle = {
-    "ActionID": str(uuid.uuid4()),
-    "Actions": [
-        {"Actions": show_actions},  # First press
-        {"Actions": hide_actions},  # Second press
-    ],
+{"label": "Toggle CTA", "_action": make_multi_action_switch(show_actions, hide_actions)}
+```
+
+### Filter toggle, record pause, chapter marker
+
+```python
+from streamdeck_installer import make_obs_filter_toggle, make_obs_record_pause, make_obs_chapter_marker
+
+{"label": "Filter",  "_action": make_obs_filter_toggle("Camera Source")}
+{"label": "Pause",   "_action": make_obs_record_pause()}
+{"label": "Chapter", "_action": make_obs_chapter_marker()}
+```
+
+## Apple Music
+
+```python
+from streamdeck_installer import (
+    make_music_play_pause, make_music_next, make_music_previous,
+    make_music_love, make_music_shuffle, make_music_volume,
+)
+
+{"label": "Play",    "_action": make_music_play_pause()}
+{"label": "Next",    "_action": make_music_next()}
+{"label": "Prev",    "_action": make_music_previous()}
+{"label": "Love",    "_action": make_music_love()}
+{"label": "Shuffle", "_action": make_music_shuffle()}
+{"label": "Vol Up",  "_action": make_music_volume("up")}
+{"label": "Vol Down", "_action": make_music_volume("down")}
+```
+
+## Apple Shortcuts
+
+Requires the [Shortcuts plugin](https://apps.elgato.com/plugins/com.sentinelite.streamdeckshortcuts).
+
+```python
+from streamdeck_installer import make_shortcut_action
+
+{"label": "My Shortcut", "_action": make_shortcut_action("Shortcut Name")}
+
+# With UUID (find via: shortcuts list)
+{"label": "QR Code", "_action": make_shortcut_action("Generate QR Code", "F03400C9-...")}
+```
+
+## Zoom
+
+Requires the [Zoom plugin](https://apps.elgato.com/plugins/com.lostdomain.zoom).
+
+```python
+from streamdeck_installer import (
+    make_zoom_mute, make_zoom_video, make_zoom_share,
+    make_zoom_record, make_zoom_leave, make_zoom_focus,
+)
+
+{"label": "Mute",   "_action": make_zoom_mute()}
+{"label": "Video",  "_action": make_zoom_video()}
+{"label": "Share",  "_action": make_zoom_share()}
+{"label": "Record", "_action": make_zoom_record()}
+{"label": "Leave",  "_action": make_zoom_leave()}
+{"label": "Focus",  "_action": make_zoom_focus()}
+```
+
+## Navigation
+
+```python
+from streamdeck_installer import make_next_page_action, make_previous_page_action, make_back_to_parent_action
+
+{"label": "Next",   "_action": make_next_page_action()}
+{"label": "Back",   "_action": make_previous_page_action()}
+{"label": "Parent", "_action": make_back_to_parent_action()}
+```
+
+## System Actions
+
+```python
+from streamdeck_installer import (
+    make_website_action, make_text_action, make_hotkey_switch_action,
+    make_multimedia_action, make_play_audio_action,
+)
+
+# Open a URL
+{"label": "GitHub", "_action": make_website_action("https://github.com")}
+
+# Paste text
+{"label": "Email", "_action": make_text_action("hello@example.com")}
+
+# Hotkey toggle (press 1 = key1, press 2 = key2)
+{"label": "Mute", "_action": make_hotkey_switch_action("m", ["cmd", "shift"])}
+
+# Multimedia keys
+{"label": "Vol Up", "_action": make_multimedia_action("volume_up")}
+# Options: play_pause, previous, next, stop, volume_down, volume_up, mute
+
+# Sound effect
+{"label": "Laugh", "_action": make_play_audio_action("/path/to/sound.mp3", volume=50)}
+```
+
+## Adding Support for Other Plugins
+
+Any Stream Deck plugin can be automated. The process:
+
+1. Create **one button manually** in the Stream Deck UI
+2. Find the profile at `~/Library/Application Support/com.elgato.StreamDeck/ProfilesV3/`
+3. Open `Profiles/*/manifest.json` and find the action JSON
+4. Copy the `UUID`, `Plugin`, and `Settings` structure into a Python helper function
+
+Every action follows the same skeleton:
+
+```python
+{
+    "ActionID": str(uuid.uuid4()),   # random, unique per button
     "LinkedTitle": True,
-    "Name": "Multi Action Switch",
-    "Plugin": {"Name":"Multi Action",
-               "UUID":"com.elgato.streamdeck.multiactions","Version":"1.0"},
+    "Name": "Action Name",
+    "Plugin": {"Name": "Plugin Name", "UUID": "com.example.plugin", "Version": "1.0"},
     "Resources": None,
-    "Settings": {},
+    "Settings": {},                  # plugin-specific config
     "State": 0,
-    "States": [{}, {}],
-    "UUID": "com.elgato.streamdeck.multiactions.routine2",  # routine2, NOT routine
+    "States": [{}],                  # one {} per state (toggles have 2)
+    "UUID": "com.example.plugin.action",
 }
-{"label": "Toggle CTA", "_action": toggle}
 ```
 
 ## Key Reference

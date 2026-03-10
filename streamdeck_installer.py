@@ -245,7 +245,299 @@ def make_multi_action_from_list(sub_actions, label=""):
         "UUID": "com.elgato.streamdeck.multiactions.routine",
     }
 
-# Colour palette for auto-icons (used when btn has an "icon" key)
+# ── Navigation Actions ────────────────────────────────────────────────────────
+
+def make_next_page_action(label=""):
+    """Navigate to the next page in a multi-page profile."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Next Page",
+        "Plugin": {"Name":"Pages","UUID":"com.elgato.streamdeck.page","Version":"1.0"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.page.next",
+    }
+
+def make_previous_page_action(label=""):
+    """Navigate to the previous page in a multi-page profile."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Previous Page",
+        "Plugin": {"Name":"Pages","UUID":"com.elgato.streamdeck.page","Version":"1.0"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.page.previous",
+    }
+
+def make_back_to_parent_action(label=""):
+    """Navigate back to parent folder/profile."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Parent Folder",
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.profile.backtoparent",
+    }
+
+# ── System Actions ────────────────────────────────────────────────────────────
+
+def make_website_action(url, open_in_browser=True, label=""):
+    """Open a URL in the default browser or in-app viewer."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Website",
+        "Plugin": {"Name":"Website","UUID":"com.elgato.streamdeck.system.website","Version":"1.0"},
+        "Resources": None,
+        "Settings": {"openInBrowser": open_in_browser, "path": url},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.system.website",
+    }
+
+def make_text_action(text, send_enter=False, label=""):
+    """Paste text into the active app. Optionally press Enter after."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Text",
+        "Plugin": {"Name":"Text","UUID":"com.elgato.streamdeck.system.text","Version":"1.0"},
+        "Resources": None,
+        "Settings": {"isSendingEnter": send_enter, "pastedText": text},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.system.text",
+    }
+
+def make_hotkey_switch_action(key1, mods1=None, key2=None, mods2=None, label=""):
+    """Toggle hotkey — press once sends key1, press again sends key2.
+    If key2 is None, both presses send the same key (toggle behavior)."""
+    hk1 = build_hotkey_settings(key1, mods1)
+    entries = list(hk1["Hotkeys"])
+    if key2:
+        native2 = resolve_key(key2)
+        entry2 = {**build_modifier(mods2), "NativeCode": native2,
+                   "QTKeyCode": NATIVE_TO_QT.get(native2, native2), "VKeyCode": native2}
+        entries[1] = entry2
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": False,
+        "Name": "Hotkey Switch",
+        "Plugin": {"Name":"Hotkey Switch","UUID":"com.elgato.streamdeck.system.hotkeyswitch","Version":"1.0"},
+        "Resources": None,
+        "Settings": {"Coalesce": True, "Hotkeys": entries},
+        "State": 0,
+        "States": [{"Title": label}, {"Title": label}],
+        "UUID": "com.elgato.streamdeck.system.hotkeyswitch",
+    }
+
+MULTIMEDIA_ACTIONS = {
+    "play_pause": 0, "previous": 1, "next": 2, "stop": 3,
+    "volume_down": 4, "volume_up": 5, "mute": 6,
+}
+
+def make_multimedia_action(action_name, label=""):
+    """Multimedia key: 'play_pause', 'previous', 'next', 'stop',
+    'volume_down', 'volume_up', 'mute'."""
+    idx = MULTIMEDIA_ACTIONS.get(action_name)
+    if idx is None:
+        raise ValueError(f"Unknown multimedia action: '{action_name}'. Use: {list(MULTIMEDIA_ACTIONS.keys())}")
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Multimedia",
+        "Plugin": {"Name":"Multimedia","UUID":"com.elgato.streamdeck.system.multimedia","Version":"1.0"},
+        "Resources": None,
+        "Settings": {"actionIdx": idx},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.system.multimedia",
+    }
+
+def make_play_audio_action(audio_path, volume=50, label=""):
+    """Play an audio file from the Stream Deck sound library or a local path."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": False,
+        "Name": "Play Audio",
+        "Resources": None,
+        "Settings": {
+            "actionType": 1, "fadeLen": 1, "fadeType": 0,
+            "outputType": "", "path": audio_path, "volume": volume,
+        },
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.soundboard.playaudio",
+    }
+
+# ── Multi Action Helpers ──────────────────────────────────────────────────────
+
+def make_multi_action_switch(state0_actions, state1_actions, label=""):
+    """Create a Multi Action Switch (toggle). Press 1 runs state0, press 2 runs state1.
+    IMPORTANT: Uses routine2 UUID, NOT routine."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "Actions": [{"Actions": state0_actions}, {"Actions": state1_actions}],
+        "LinkedTitle": True,
+        "Name": "Multi Action Switch",
+        "Plugin": {"Name":"Multi Action","UUID":"com.elgato.streamdeck.multiactions","Version":"1.0"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{"Title": label}, {}],
+        "UUID": "com.elgato.streamdeck.multiactions.routine2",
+    }
+
+# ── Apple Music Actions ───────────────────────────────────────────────────────
+
+def _apple_music_action(action_uuid, name, states_count=1, settings=None, label=""):
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": False,
+        "Name": name,
+        "Plugin": {"Name":"Apple Music","UUID":"com.elgato.applemusic","Version":"1.1"},
+        "Resources": None,
+        "Settings": settings or {},
+        "State": 0,
+        "States": [{}] * states_count,
+        "UUID": action_uuid,
+    }
+
+def make_music_play_pause(label=""):
+    return _apple_music_action("com.elgato.applemusic.play", "Play/Pause", 2, label=label)
+
+def make_music_next(label=""):
+    return _apple_music_action("com.elgato.applemusic.next", "Next Track", 1, label=label)
+
+def make_music_previous(label=""):
+    return _apple_music_action("com.elgato.applemusic.previous", "Previous Track", 1, label=label)
+
+def make_music_love(label=""):
+    return _apple_music_action("com.elgato.applemusic.love", "Love", 2, label=label)
+
+def make_music_shuffle(label=""):
+    return _apple_music_action("com.elgato.applemusic.shuffle", "Shuffle", 2, label=label)
+
+def make_music_volume(direction="up", label=""):
+    """direction: 'up' or 'down'."""
+    return _apple_music_action("com.elgato.applemusic.volume", "Volume", 2,
+                                settings={"currentSelectedID": direction}, label=label)
+
+# ── Apple Shortcuts Action ────────────────────────────────────────────────────
+
+def make_shortcut_action(shortcut_name, shortcut_uuid="", label=""):
+    """Launch an Apple Shortcut by name. shortcut_uuid is optional but recommended
+    (find it in Shortcuts.app or via: shortcuts list)."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Launch Shortcut",
+        "Plugin": {"Name":"Shortcuts","UUID":"com.sentinelite.streamdeckshortcuts","Version":"2.0.0.1"},
+        "Resources": None,
+        "Settings": {
+            "accessHoldTime": 0,
+            "isPerKeyAccessibility": False,
+            "isPerKeyForcedTextfield": False,
+            "isPerKeyHoldTime": False,
+            "shortcutToRun": shortcut_name,
+            "shortcutUUID": shortcut_uuid,
+        },
+        "State": 0,
+        "States": [{"Title": label or shortcut_name}],
+        "UUID": "com.sentinelite.streamdeckshortcuts.launcher",
+    }
+
+# ── Zoom Actions ──────────────────────────────────────────────────────────────
+
+def _zoom_action(action_uuid, name, label=""):
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": False,
+        "Name": name,
+        "Plugin": {"Name":"Zoom Plugin","UUID":"com.lostdomain.zoom","Version":"3.0"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{}, {}, {}],
+        "UUID": action_uuid,
+    }
+
+def make_zoom_mute(label=""):
+    return _zoom_action("com.lostdomain.zoom.mutetoggle", "Mute Toggle", label)
+
+def make_zoom_video(label=""):
+    return _zoom_action("com.lostdomain.zoom.videotoggle", "Video Toggle", label)
+
+def make_zoom_share(label=""):
+    return _zoom_action("com.lostdomain.zoom.sharetoggle", "Share Toggle", label)
+
+def make_zoom_record(label=""):
+    return _zoom_action("com.lostdomain.zoom.recordlocaltoggle", "Local Record Toggle", label)
+
+def make_zoom_leave(label=""):
+    action = _zoom_action("com.lostdomain.zoom.leave", "Leave Meeting", label)
+    action["States"] = [{}, {}]  # 2 states, not 3
+    return action
+
+def make_zoom_focus(label=""):
+    action = _zoom_action("com.lostdomain.zoom.focus", "Focus", label)
+    action["States"] = [{}, {}]
+    return action
+
+# ── OBS Additional Actions ────────────────────────────────────────────────────
+
+def make_obs_filter_toggle(source_name, collection="Untitled", label=""):
+    """Toggle an OBS source filter on/off."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Filter",
+        "Plugin": {"Name":"OBS Studio","UUID":"com.elgato.obsstudio","Version":"2.2.9.9"},
+        "Resources": None,
+        "Settings": {"collection": collection, "source": source_name},
+        "State": 0,
+        "States": [{}, {}],
+        "UUID": "com.elgato.obsstudio.filter.state",
+    }
+
+def make_obs_record_pause(label=""):
+    """Toggle OBS recording pause."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Record Pause",
+        "Plugin": {"Name":"OBS Studio","UUID":"com.elgato.obsstudio","Version":"2.2.9.9"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{}, {}],
+        "UUID": "com.elgato.obsstudio.record.pause",
+    }
+
+def make_obs_chapter_marker(autonumber=True, label=""):
+    """Add a chapter marker in OBS recording."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Chapter Marker",
+        "Plugin": {"Name":"OBS Studio","UUID":"com.elgato.obsstudio","Version":"2.2.9.9"},
+        "Resources": None,
+        "Settings": {"autonumber": autonumber},
+        "State": 0,
+        "States": [{}, {}],
+        "UUID": "com.elgato.obsstudio.record.addchapter",
+    }
+
+# ── Colour palette for auto-icons (used when btn has an "icon" key)
 ICON_COLORS = {
     "blue":   (25,  65, 185),
     "purple": (100, 40, 190),
