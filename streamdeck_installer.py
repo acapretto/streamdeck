@@ -177,6 +177,74 @@ def make_open_action(app_path, label=""):
         "UUID": "com.elgato.streamdeck.system.open",
     }
 
+def make_obs_source_visibility(scene, source_name, sceneitemid, show=True, collection="Untitled", label=""):
+    """Create an OBS Source Visibility action for use in multi-actions.
+    show=True → Show, show=False → Hide."""
+    action = {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Source Visibility",
+        "Plugin": {"Name":"OBS Studio","UUID":"com.elgato.obsstudio","Version":"2.2.9.9"},
+        "Resources": None,
+        "Settings": {
+            "collection": collection,
+            "scene": scene,
+            "sceneitemid": sceneitemid,
+            "sceneitemname": source_name,
+            "sceneitemscene": scene,
+            "toplevelscene": scene,
+        },
+        "State": 0,
+        "States": [{"Title": label}, {}],
+        "UUID": "com.elgato.obsstudio.source",
+    }
+    if not show:
+        action["OverrideState"] = 1
+    return action
+
+def make_delay_action(delay_ms):
+    """Create a Delay action for use inside multi-actions."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Delay",
+        "Plugin": {"Name":"Multi Action","UUID":"com.elgato.streamdeck.multiactions","Version":"1.0"},
+        "Resources": None,
+        "Settings": {"delay": delay_ms},
+        "State": 0,
+        "States": [{}],
+        "UUID": "com.elgato.streamdeck.multiactions.delay",
+    }
+
+def make_obs_scene_action(scene, collection="Untitled", label=""):
+    """Create an OBS Scene switch action."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "LinkedTitle": True,
+        "Name": "Scene",
+        "Plugin": {"Name":"OBS Studio","UUID":"com.elgato.obsstudio","Version":"2.2.9.9"},
+        "Resources": None,
+        "Settings": {"collection": collection, "scene": scene},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.obsstudio.scene",
+    }
+
+def make_multi_action_from_list(sub_actions, label=""):
+    """Create a Multi Action from a list of pre-built action dicts."""
+    return {
+        "ActionID": str(uuid.uuid4()),
+        "Actions": [{"Actions": sub_actions}, {"Actions": []}],
+        "LinkedTitle": True,
+        "Name": "Multi Action",
+        "Plugin": {"Name":"Multi Action","UUID":"com.elgato.streamdeck.multiactions","Version":"1.0"},
+        "Resources": None,
+        "Settings": {},
+        "State": 0,
+        "States": [{"Title": label}],
+        "UUID": "com.elgato.streamdeck.multiactions.routine",
+    }
+
 # Colour palette for auto-icons (used when btn has an "icon" key)
 ICON_COLORS = {
     "blue":   (25,  65, 185),
@@ -197,10 +265,19 @@ def build_action(idx, btn):
     if "open" in btn:
         return pos, make_open_action(btn["open"], label)
 
+    # Pre-built action dict (from make_multi_action_from_list, make_obs_scene_action, etc.)
+    if "_action" in btn:
+        action = btn["_action"]
+        # Apply icon if present
+        return pos, action
+
     if "actions" in btn:
         sub_actions = []
         for step in btn["actions"]:
-            sub_actions.append(make_hotkey_action(step["key"], step.get("mods"), ""))
+            if "_action" in step:
+                sub_actions.append(step["_action"])
+            else:
+                sub_actions.append(make_hotkey_action(step["key"], step.get("mods"), ""))
         return pos, {
             "ActionID": str(uuid.uuid4()),
             "Actions": [{"Actions": sub_actions}],
@@ -215,53 +292,37 @@ def build_action(idx, btn):
             "UUID": "com.elgato.streamdeck.multiactions.routine",
         }
 
-    return pos, make_hotkey_action(btn["key"], btn.get("mods"), label)
+    if "key" in btn:
+        return pos, make_hotkey_action(btn["key"], btn.get("mods"), label)
+
+    # Fallback for buttons with only label/icon (spacer with icon)
+    return pos, {"ActionID": str(uuid.uuid4()), "Name": "Spacer", "States": [{"Title": label}]}
 
 
-def install_profile(name, buttons, app=None):
-    """Install a profile directly into Stream Deck's ProfilesV3 and register it."""
-
-    if len(buttons) > 15:
-        print(f"Warning: {len(buttons)} buttons defined but only 15 fit. Extras ignored.")
-        buttons = buttons[:15]
-
-    # Build page actions
+def _build_page(buttons, profile_dir, page_uuid):
+    """Build a single page: write manifest + generate icons. Returns action count."""
     actions = {}
     for idx, btn in enumerate(buttons):
+        if btn is None:
+            continue
+        if not btn.get("key") and not btn.get("open") and not btn.get("actions") and not btn.get("_action"):
+            continue
         pos, action = build_action(idx, btn)
         actions[pos] = action
 
-    # Generate UUIDs
-    profile_uuid = str(uuid.uuid4()).upper()
-    page_uuid    = str(uuid.uuid4())
-    default_uuid = str(uuid.uuid4())
+    page_dir = os.path.join(profile_dir, "Profiles", page_uuid.upper())
+    os.makedirs(page_dir, exist_ok=True)
 
-    # Top-level manifest
-    top_manifest = {
-        "Device": {"Model": DEVICE_MODEL, "UUID": DEVICE_UUID},
-        "Name": name,
-        "Pages": {"Current": page_uuid, "Default": default_uuid, "Pages": [page_uuid]},
-        "Version": "3.0",
-    }
-    if app:
-        top_manifest["AppIdentifier"] = app
-
-    # Page manifest
     page_manifest = {
         "Controllers": [{"Actions": actions, "Type": "Keypad"}],
         "Icon": "",
         "Name": "",
     }
 
-    # Write files
-    profile_dir = os.path.join(PROFILES_V3, f"{profile_uuid}.sdProfile")
-    page_dir    = os.path.join(profile_dir, "Profiles", page_uuid.upper())
-    os.makedirs(page_dir, exist_ok=True)
-
     # Generate icons for buttons that have "icon" and "color" keys
     images_dir = os.path.join(page_dir, "Images")
     for idx, btn in enumerate(buttons):
-        if "icon" not in btn:
+        if btn is None or "icon" not in btn:
             continue
         if not _ICONS_AVAILABLE:
             break
@@ -279,10 +340,56 @@ def install_profile(name, buttons, app=None):
         if pos in page_manifest["Controllers"][0]["Actions"]:
             page_manifest["Controllers"][0]["Actions"][pos]["States"] = [{"Image": f"Images/{fname}"}]
 
-    with open(os.path.join(profile_dir, "manifest.json"), "w") as f:
-        json.dump(top_manifest, f, indent=2)
     with open(os.path.join(page_dir, "manifest.json"), "w") as f:
         json.dump(page_manifest, f, indent=2)
+
+    return len(actions)
+
+
+def install_profile(name, buttons=None, pages=None, app=None):
+    """Install a profile directly into Stream Deck's ProfilesV3 and register it.
+
+    Args:
+        name: Profile display name.
+        buttons: List of button dicts for a single-page profile (max 15).
+        pages: List of lists of button dicts for a multi-page profile (max 15 per page).
+               Use this OR buttons, not both.
+        app: Optional app bundle path for auto-activation.
+    """
+    if pages is None and buttons is not None:
+        pages = [buttons]
+    elif pages is None and buttons is None:
+        raise ValueError("Provide either 'buttons' (single page) or 'pages' (multi-page).")
+
+    for i, page_buttons in enumerate(pages):
+        if len(page_buttons) > 15:
+            print(f"Warning: Page {i+1} has {len(page_buttons)} buttons but only 15 fit. Extras ignored.")
+            pages[i] = page_buttons[:15]
+
+    # Generate UUIDs
+    profile_uuid = str(uuid.uuid4()).upper()
+    page_uuids   = [str(uuid.uuid4()) for _ in pages]
+    default_uuid = str(uuid.uuid4())
+
+    # Top-level manifest
+    top_manifest = {
+        "Device": {"Model": DEVICE_MODEL, "UUID": DEVICE_UUID},
+        "Name": name,
+        "Pages": {"Current": page_uuids[0], "Default": default_uuid, "Pages": page_uuids},
+        "Version": "3.0",
+    }
+    if app:
+        top_manifest["AppIdentifier"] = app
+
+    # Write files
+    profile_dir = os.path.join(PROFILES_V3, f"{profile_uuid}.sdProfile")
+
+    total_buttons = 0
+    for page_buttons, page_uuid in zip(pages, page_uuids):
+        total_buttons += _build_page(page_buttons, profile_dir, page_uuid)
+
+    with open(os.path.join(profile_dir, "manifest.json"), "w") as f:
+        json.dump(top_manifest, f, indent=2)
 
     # Register in plist
     with open(PLIST_PATH, "rb") as f:
@@ -302,7 +409,8 @@ def install_profile(name, buttons, app=None):
     with open(PLIST_PATH, "wb") as f:
         plistlib.dump(plist, f)
 
-    print(f"✓ Installed '{name}' ({len(actions)} buttons)")
+    page_label = f"{len(pages)} page{'s' if len(pages) > 1 else ''}"
+    print(f"✓ Installed '{name}' ({total_buttons} buttons, {page_label})")
     print(f"  Profile UUID: {profile_uuid}")
     print(f"  Reopen Stream Deck to see it.")
     return profile_uuid

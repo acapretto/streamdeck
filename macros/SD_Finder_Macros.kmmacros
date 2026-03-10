@@ -19,10 +19,22 @@
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "System Events"
     keystroke "c" using command down
@@ -32,6 +44,12 @@ tell application "Keyboard Maestro Engine"
     setvariable "SDClip1" to (the clipboard as text)
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -55,7 +73,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>76DA22EF-CFB3-45BA-8490-ADCFFBD2A784</string>
+				<string>6E705ED6-2272-4E36-963F-C80C7B5CB7D8</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -63,10 +81,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "System Events"
     keystroke "c" using command down
@@ -76,6 +106,12 @@ tell application "Keyboard Maestro Engine"
     setvariable "SDClip2" to (the clipboard as text)
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -99,7 +135,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>CE0927C3-17EE-438A-BFFF-17292F9D6154</string>
+				<string>8C4F4A76-69BB-4EDA-B70B-112A74242667</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -107,10 +143,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "System Events"
     keystroke "c" using command down
@@ -120,6 +168,12 @@ tell application "Keyboard Maestro Engine"
     setvariable "SDClip3" to (the clipboard as text)
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -143,7 +197,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>BCA7F45F-91E4-40BA-96C9-BB04FC3C9D71</string>
+				<string>F7213CAB-C2D8-4A29-B943-F7EEE291C923</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -151,10 +205,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "Keyboard Maestro Engine"
     set theClip to getvariable "SDClip1"
@@ -166,6 +232,12 @@ if theClip is not "" then
     end tell
 end if</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -189,7 +261,7 @@ end if</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>6084CEE3-532E-4982-A7A9-531B1B304940</string>
+				<string>6BAD89E9-3525-4EB6-A464-046E57CD34ED</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -197,10 +269,22 @@ end if</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "Keyboard Maestro Engine"
     set theClip to getvariable "SDClip2"
@@ -212,6 +296,12 @@ if theClip is not "" then
     end tell
 end if</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -235,7 +325,7 @@ end if</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>2E1CD463-C590-4944-A6EB-AC00DEED88A1</string>
+				<string>C956D968-E670-40A6-9CB8-894E436F84CB</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -243,10 +333,22 @@ end if</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "Keyboard Maestro Engine"
     set theClip to getvariable "SDClip3"
@@ -258,6 +360,12 @@ if theClip is not "" then
     end tell
 end if</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -281,7 +389,7 @@ end if</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>C1090990-D376-4237-99D1-F822A7222FBE</string>
+				<string>3C7FEABB-A442-432C-AAF3-E5F4404B6724</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -289,10 +397,22 @@ end if</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>set theText to "You are an expert [ROLE]." &amp; return &amp; "Your goal is to [TASK]." &amp; return &amp; "Audience: [WHO THIS IS FOR]" &amp; return &amp; "Format: [BULLET POINTS / PROSE / TABLE / etc.]" &amp; return &amp; "Length: [BRIEF / STANDARD / DETAILED]" &amp; return &amp; "Constraints:" &amp; return &amp; "- [CONSTRAINT]" &amp; return &amp; "- Do not [THING TO AVOID]" &amp; return &amp; "- Ask clarifying questions if anything is unclear" &amp; return &amp; "" &amp; return &amp; "[PASTE CONTENT HERE]"
 set the clipboard to theText
@@ -300,6 +420,12 @@ tell application "System Events"
     keystroke "v" using command down
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -323,7 +449,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>17F7070E-EC67-4B97-B522-9089BA3AE1A7</string>
+				<string>1883B66E-42B7-4522-879C-1C0AD313C49D</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -331,10 +457,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>set theText to "Think through this step by step before giving your final answer." &amp; return &amp; "" &amp; return &amp; "Context: [BACKGROUND]" &amp; return &amp; "Task: [WHAT YOU NEED]" &amp; return &amp; "Format: Show your reasoning briefly, then give a clear final answer." &amp; return &amp; "Constraints:" &amp; return &amp; "- Do not make assumptions — state them explicitly if you must make any" &amp; return &amp; "- Do not add unsolicited content beyond what I asked for" &amp; return &amp; "" &amp; return &amp; "[PASTE CONTENT OR QUESTION HERE]"
 set the clipboard to theText
@@ -342,6 +480,12 @@ tell application "System Events"
     keystroke "v" using command down
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -365,7 +509,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>3F9717B7-9617-4448-8844-16BE91C15E9E</string>
+				<string>0DAC2258-C593-4C38-AB2B-C0F3ABF097D0</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -373,10 +517,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "Finder" to activate
 delay 0.2
@@ -396,6 +552,12 @@ tell application "System Events"
     end tell
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -419,7 +581,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>36412066-2D59-4DAA-90E2-F1F5FD0A41F7</string>
+				<string>DC6BD69E-1DC3-48AE-910A-C38B83DE5DCE</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -427,10 +589,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>tell application "Finder"
     set finderWindow to window 1
@@ -441,6 +615,12 @@ tell application "Terminal"
     do script "cd " &amp; quoted form of finderPath
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -464,7 +644,7 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>A6769A47-4D95-4E1D-8830-878C91BB6703</string>
+				<string>032E8967-EA42-40F5-B6D4-2229471629F4</string>
 			</dict>
 			<dict>
 				<key>Actions</key>
@@ -472,10 +652,22 @@ end tell</string>
 					<dict>
 						<key>ActionUID</key>
 						<integer>1</integer>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>HonourFailureSettings</key>
+						<true/>
+						<key>IncludeStdErr</key>
+						<false/>
 						<key>IsDisclosed</key>
 						<false/>
 						<key>MacroActionType</key>
 						<string>ExecuteAppleScript</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>set theText to the clipboard as text
 set the clipboard to theText
@@ -483,6 +675,12 @@ tell application "System Events"
     keystroke "v" using command down
 end tell</string>
 						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<false/>
+						<key>TrimResultsNew</key>
+						<false/>
+						<key>UseText</key>
 						<true/>
 					</dict>
 				</array>
@@ -506,13 +704,13 @@ end tell</string>
 					</dict>
 				</array>
 				<key>UID</key>
-				<string>64B70629-5BE7-4B61-856E-7C2FE3E00F91</string>
+				<string>3AA9CDAB-FBEC-4838-A817-82FEFE80C12A</string>
 			</dict>
 		</array>
 		<key>Name</key>
 		<string>SD Finder</string>
 		<key>UID</key>
-		<string>8E5B26C6-9773-4817-A0E3-BE415AD5446D</string>
+		<string>1A2BDE87-FE81-456E-8937-78119983C238</string>
 	</dict>
 </array>
 </plist>
